@@ -1,0 +1,16 @@
+{
+  "name": "nl2sql-langgraph-docs",
+  "version": "0.1.0",
+  "description": "NL2SQL LangGraph Course Documentation",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "keywords": ["nl2sql", "langgraph", "tutorial", "course"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}

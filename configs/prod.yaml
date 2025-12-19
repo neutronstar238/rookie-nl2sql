@@ -1,0 +1,114 @@
+# Production Environment Configuration
+# M13: Production-ready settings
+
+system:
+  name: "nl2sql-langgraph"
+  version: "1.0.0"
+  environment: "production"
+  log_level: "WARNING"
+
+# LLM Configuration
+llm:
+  provider: "deepseek"  # Can be overridden by env var
+  temperature: 0.0
+  max_tokens: 4000
+  timeout: 60  # Increased timeout for production
+  
+  # DeepSeek 配置
+  deepseek:
+    model: "deepseek-chat"
+    base_url: "https://api.deepseek.com"
+    # API Key 从环境变量读取
+  
+  # Qwen 配置
+  qwen:
+    model: "qwen-plus"
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  
+  # OpenAI 配置
+  openai:
+    model: "gpt-4"
+    base_url: "https://api.openai.com/v1"
+
+# Database Configuration
+database:
+  type: "sqlite"  # Production: use postgresql or mysql
+  path: "data/chinook.db"
+  read_only: true
+  max_rows: 1000
+  timeout: 30
+  
+  # PostgreSQL example (uncomment to use)
+  # type: "postgresql"
+  # host: "postgres"
+  # port: 5432
+  # database: "nl2sql"
+  # user: "nl2sql"
+  # password: "${POSTGRES_PASSWORD}"  # From env
+  # pool_size: 10
+  # max_overflow: 20
+
+# RAG Configuration
+rag:
+  enabled: true
+  vector_store: "faiss"
+  top_k: 5
+  
+  embedding:
+    provider: "local"
+    model: "BAAI/bge-small-zh-v1.5"
+
+# Graph Configuration
+graph:
+  max_iterations: 10
+  enable_logging: true
+  trace_enabled: true
+  checkpoint_enabled: true  # Enable state persistence
+
+# Security Configuration
+security:
+  enable_sandbox: true
+  allowed_operations: ["SELECT"]
+  max_execution_time: 30
+  max_result_rows: 1000
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    requests_per_hour: 1000
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  timeout: 120
+  cors:
+    allow_origins: ["*"]  # Production: specify exact origins
+    allow_credentials: true
+  
+# Cache Configuration
+cache:
+  enabled: true
+  type: "memory"  # memory, redis
+  ttl: 3600  # 1 hour
+  
+  # Redis configuration (uncomment to use)
+  # redis:
+  #   host: "redis"
+  #   port: 6379
+  #   db: 0
+
+# Monitoring & Observability
+monitoring:
+  enabled: true
+  metrics_enabled: true
+  tracing_enabled: true
+  log_sql_queries: true
+  log_llm_calls: true
+  
+# Performance
+performance:
+  enable_query_cache: true
+  enable_schema_cache: true
+  schema_cache_ttl: 3600
+  connection_pool_size: 10

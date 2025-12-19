@@ -1,0 +1,46 @@
+{
+  "summary": {
+    "total_cases": 1,
+    "total_time": 9.71,
+    "avg_time_per_case": 9.71,
+    "metrics": {
+      "sql_exact_match_rate": 0.0,
+      "sql_semantic_match_rate": 0.0,
+      "execution_success_rate": 100.0,
+      "execution_accuracy_rate": 100.0
+    },
+    "counts": {
+      "sql_exact_match": 0,
+      "sql_semantic_match": 0,
+      "execution_success": 1,
+      "execution_accuracy": 1
+    }
+  },
+  "by_category": {
+    "test": {
+      "total": 1,
+      "sql_exact_match_rate": 0.0,
+      "execution_success_rate": 100.0
+    }
+  },
+  "results": [
+    {
+      "question": "测试问题",
+      "category": "test",
+      "description": "",
+      "expected_sql": "SELECT * FROM Track LIMIT 5",
+      "generated_sql": "SELECT\n  *\nFROM Customer\nLIMIT 1",
+      "execution_success": true,
+      "result_count": 1,
+      "execution_time": 9.714,
+      "answer": "根据查询结果，数据库中有一条客户记录。\n\n以下是该客户的具体信息：\n\n| 字段 | 值 |\n|------|-----|\n| **客户ID** | 1 |\n| **名** | Luís |\n| **姓** | Gonçalves |\n| **公司** | Embraer - Empresa Brasileira de Aeronáutica S.A. |\n| **地址** | Av. Brigadeiro Faria Lima, 2170 |\n| **城市** | São José dos Campos |\n| **州/省** | SP |\n| **国家** | Brazil |\n| **邮政编码** | 12227-000 |\n| **电话** | +55 (12) 3923-5555 |\n| **传真** | +55 (12) 3923-5566 |\n| **邮箱** | luisg@embraer.com.br |\n| **支持代表ID** | 3 |\n\n这位客户来自巴西，其支持代表ID为3。\n\n此结果通过执行 `SELECT * FROM Customer LIMIT 1` 查询获得，该查询从Customer表中提取了第一条完整记录。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": false,
+        "execution_accuracy": true
+      }
+    }
+  ],
+  "timestamp": "2025-12-18T12:35:24.147033"
+}

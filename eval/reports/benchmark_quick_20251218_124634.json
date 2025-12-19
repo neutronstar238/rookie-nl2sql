@@ -1,0 +1,114 @@
+{
+  "summary": {
+    "total_cases": 5,
+    "total_time": 42.54,
+    "avg_time_per_case": 8.51,
+    "metrics": {
+      "sql_exact_match_rate": 80.0,
+      "sql_semantic_match_rate": 100.0,
+      "execution_success_rate": 100.0,
+      "execution_accuracy_rate": 100.0
+    },
+    "counts": {
+      "sql_exact_match": 4,
+      "sql_semantic_match": 5,
+      "execution_success": 5,
+      "execution_accuracy": 5
+    }
+  },
+  "by_category": {
+    "simple_select": {
+      "total": 5,
+      "sql_exact_match_rate": 80.0,
+      "execution_success_rate": 100.0
+    }
+  },
+  "results": [
+    {
+      "question": "显示所有专辑",
+      "category": "simple_select",
+      "description": "SELECT all from single table",
+      "expected_sql": "SELECT * FROM Album",
+      "generated_sql": "SELECT\n  *\nFROM Album LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 8.212,
+      "answer": "数据库中总共有 **100 张专辑**。以下是前5张专辑的预览：\n\n| 专辑ID | 专辑名称 | 艺术家ID |\n| --- | --- | --- |\n| 1 | For Those About To Rock We Salute You | 1 |\n| 2 | Balls to the Wall | 2 |\n| 3 | Restless and Wild | 2 |\n| 4 | Let There Be Rock | 1 |\n| 5 | Big Ones | 3 |\n\n（由于数据量较大，此处仅展示前5行，完整的100行数据未完全显示。）\n\n查询通过直接选择 `Album` 表中的所有列并限制返回1000行结果来获取所有专辑信息。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示所有客户",
+      "category": "simple_select",
+      "description": "SELECT all customers",
+      "expected_sql": "SELECT * FROM Customer",
+      "generated_sql": "SELECT\n  *\nFROM Customer LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 59,
+      "execution_time": 10.177,
+      "answer": "数据库中总共有 **59 位客户**。\n\n以下是前5位客户的信息预览：\n\n| 客户ID | 名 | 姓 | 公司 | 城市 | 国家 | 支持代表ID |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| 1 | Luís | Gonçalves | Embraer - Empresa Brasileira de Aeronáutica S.A. | São José dos Campos | Brazil | 3 |\n| 2 | Leonie | Köhler | None | Stuttgart | Germany | 5 |\n| 3 | François | Tremblay | None | Montréal | Canada | 3 |\n| 4 | Bjørn | Hansen | None | Oslo | Norway | 4 |\n| 5 | František | Wichterlová | JetBrains s.r.o. | Prague | Czech Republic | 4 |\n\n**数据洞察**：客户来自多个不同的国家，部分客户有公司信息，部分为个人客户（公司字段为“None”）。\n\n查询通过执行 `SELECT * FROM Customer` 获取了客户表的所有列，并限制了最多1000行结果，实际返回了59行完整数据。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示前10首歌曲",
+      "category": "simple_select",
+      "description": "SELECT with LIMIT",
+      "expected_sql": "SELECT * FROM Track LIMIT 10",
+      "generated_sql": "SELECT\n  *\nFROM Track\nLIMIT 10",
+      "execution_success": true,
+      "result_count": 10,
+      "execution_time": 13.021,
+      "answer": "根据您的查询，以下是数据库中的前10首歌曲：\n\n| 歌曲名称 | 专辑ID | 流派ID | 作曲者 | 时长(毫秒) | 价格 |\n|---------|--------|--------|--------|------------|------|\n| For Those About To Rock (We Salute You) | 1 | 1 | Angus Young, Malcolm Young, Brian Johnson | 343719 | 0.99 |\n| Balls to the Wall | 2 | 1 | U. Dirkschneider, W. Hoffmann, H. Frank, P. Baltes, S. Kaufmann, G. Hoffmann | 342562 | 0.99 |\n| Fast As a Shark | 3 | 1 | F. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman | 230619 | 0.99 |\n| Restless and Wild | 3 | 1 | F. Baltes, R.A. Smith-Diesel, S. Kaufman, U. Dirkscneider & W. Hoffman | 252051 | 0.99 |\n| Princess of the Dawn | 3 | 1 | Deaffy & R.A. Smith-Diesel | 375418 | 0.99 |\n| ... 还有5首歌曲 | ... | ... | ... | ... | ... |\n\n**数据洞察**：前5首歌曲均属于流派ID为1的类别，且价格均为0.99。\n\n**SQL溯源**：此结果通过查询Track表并限制返回前10行记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示所有音乐风格",
+      "category": "simple_select",
+      "description": "SELECT genres",
+      "expected_sql": "SELECT * FROM Genre",
+      "generated_sql": "SELECT\n  Name\nFROM Genre LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 25,
+      "execution_time": 5.295,
+      "answer": "数据库中总共有 **25 种音乐风格**。\n\n以下是其中主要的5种风格：\n\n| 风格名称 |\n| --- |\n| Rock |\n| Jazz |\n| Metal |\n| Alternative & Punk |\n| Rock And Roll |\n\n（还有20种风格未在此列出）\n\n查询通过直接选择 `Genre` 表中的 `Name` 列，并限制返回最多1000条记录，以获取所有音乐风格的列表。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "列出所有艺术家",
+      "category": "simple_select",
+      "description": "SELECT artists",
+      "expected_sql": "SELECT * FROM Artist",
+      "generated_sql": "SELECT\n  *\nFROM Artist LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 5.833,
+      "answer": "数据库中总共有 **100 位艺术家**。\n\n以下是前5位艺术家的列表：\n\n| 艺术家ID | 艺术家名称 |\n|----------|------------|\n| 1 | AC/DC |\n| 2 | Accept |\n| 3 | Aerosmith |\n| 4 | Alanis Morissette |\n| 5 | Alice In Chains |\n\n... 还有 95 位艺术家未在此列出。\n\n查询通过直接选择 Artist 表的所有列，并限制返回 1000 行（实际返回 100 行）来获取完整的艺术家列表。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    }
+  ],
+  "timestamp": "2025-12-18T12:46:34.508461"
+}

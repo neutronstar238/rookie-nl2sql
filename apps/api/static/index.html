@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NL2SQL - 自然语言查询系统</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🤖 NL2SQL 智能查询系统</h1>
+                <p class="subtitle">用自然语言查询数据库 - Powered by LangGraph</p>
+            </div>
+            <div class="status-indicator" id="statusIndicator">
+                <span class="status-dot"></span>
+                <span class="status-text">就绪</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel: Query Input -->
+            <div class="left-panel">
+                <div class="query-section">
+                    <h2>💬 输入您的问题</h2>
+                    <div class="query-input-wrapper">
+                        <textarea 
+                            id="queryInput" 
+                            class="query-input" 
+                            placeholder="例如：显示所有专辑&#10;例如：有多少首歌曲？&#10;例如：查询AC/DC的专辑"
+                            rows="4"
+                        ></textarea>
+                        <button id="submitBtn" class="submit-btn">
+                            <span id="submitBtnText">🚀 执行查询</span>
+                            <span id="submitBtnLoading" class="hidden">⏳ 查询中...</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Examples -->
+                <div class="examples-section">
+                    <h3>📝 示例查询</h3>
+                    <div id="examplesContainer" class="examples-container">
+                        <div class="loading-spinner">加载示例...</div>
+                    </div>
+                </div>
+
+                <!-- Database Stats -->
+                <div class="stats-section">
+                    <h3>📊 数据库统计</h3>
+                    <div id="statsContainer" class="stats-container">
+                        <div class="loading-spinner">加载统计...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Results -->
+            <div class="right-panel">
+                <!-- Welcome Message -->
+                <div id="welcomeMessage" class="welcome-message">
+                    <div class="welcome-icon">🎯</div>
+                    <h2>欢迎使用 NL2SQL 系统</h2>
+                    <p>在左侧输入框输入您的问题，或点击示例查询快速开始</p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <span class="feature-icon">✨</span>
+                            <span>自然语言理解</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔍</span>
+                            <span>智能 SQL 生成</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <span>实时查询执行</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📊</span>
+                            <span>结果可视化展示</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Container -->
+                <div id="resultsContainer" class="results-container hidden">
+                    <!-- Query Info -->
+                    <div class="result-section">
+                        <div class="section-header">
+                            <h3>❓ 您的问题</h3>
+                        </div>
+                        <div class="question-display" id="questionDisplay"></div>
+                    </div>
+
+                    <!-- Answer -->
+                    <div class="result-section" id="answerSection">
+                        <div class="section-header">
+                            <h3>💡 答案</h3>
+                        </div>
+                        <div class="answer-display" id="answerDisplay"></div>
+                    </div>
+
+                    <!-- SQL Query -->
+                    <div class="result-section">
+                        <div class="section-header collapsible" id="sqlHeader">
+                            <h3>🔧 生成的 SQL</h3>
+                            <span class="collapse-icon">▼</span>
+                        </div>
+                        <div class="sql-display" id="sqlDisplay"></div>
+                    </div>
+
+                    <!-- Data Table -->
+                    <div class="result-section" id="dataSection">
+                        <div class="section-header">
+                            <h3>📋 查询结果</h3>
+                            <span class="row-count" id="rowCount"></span>
+                        </div>
+                        <div class="table-wrapper" id="tableWrapper"></div>
+                    </div>
+
+                    <!-- Metadata -->
+                    <div class="result-section">
+                        <div class="section-header collapsible" id="metadataHeader">
+                            <h3>ℹ️ 执行信息</h3>
+                            <span class="collapse-icon">▼</span>
+                        </div>
+                        <div class="metadata-display collapsed" id="metadataDisplay"></div>
+                    </div>
+                </div>
+
+                <!-- Error Display -->
+                <div id="errorContainer" class="error-container hidden">
+                    <div class="error-icon">❌</div>
+                    <h3>查询失败</h3>
+                    <p id="errorMessage"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                Built with ❤️ using LangGraph • 
+                <a href="/docs" target="_blank">API 文档</a> • 
+                <a href="https://github.com/yourusername/nl2sql-langgraph" target="_blank">GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js?v=4"></script>
+</body>
+</html>

@@ -1,0 +1,637 @@
+{
+  "summary": {
+    "total_cases": 34,
+    "total_time": 274.96,
+    "avg_time_per_case": 8.09,
+    "metrics": {
+      "sql_exact_match_rate": 32.35,
+      "sql_semantic_match_rate": 97.06,
+      "execution_success_rate": 100.0,
+      "execution_accuracy_rate": 100.0
+    },
+    "counts": {
+      "sql_exact_match": 11,
+      "sql_semantic_match": 33,
+      "execution_success": 34,
+      "execution_accuracy": 34
+    }
+  },
+  "by_category": {
+    "simple_select": {
+      "total": 5,
+      "sql_exact_match_rate": 80.0,
+      "execution_success_rate": 100.0
+    },
+    "aggregate": {
+      "total": 5,
+      "sql_exact_match_rate": 20.0,
+      "execution_success_rate": 100.0
+    },
+    "filter": {
+      "total": 5,
+      "sql_exact_match_rate": 20.0,
+      "execution_success_rate": 100.0
+    },
+    "sort": {
+      "total": 5,
+      "sql_exact_match_rate": 60.0,
+      "execution_success_rate": 100.0
+    },
+    "join": {
+      "total": 4,
+      "sql_exact_match_rate": 0.0,
+      "execution_success_rate": 100.0
+    },
+    "group_by": {
+      "total": 5,
+      "sql_exact_match_rate": 40.0,
+      "execution_success_rate": 100.0
+    },
+    "complex": {
+      "total": 5,
+      "sql_exact_match_rate": 0.0,
+      "execution_success_rate": 100.0
+    }
+  },
+  "results": [
+    {
+      "question": "显示所有专辑",
+      "category": "simple_select",
+      "description": "SELECT all from single table",
+      "expected_sql": "SELECT * FROM Album",
+      "generated_sql": "SELECT\n  *\nFROM Album LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 7.66,
+      "answer": "数据库中总共有 **100 张专辑**。以下是前5张专辑的预览：\n\n| 专辑ID | 专辑名称 | 艺术家ID |\n| --- | --- | --- |\n| 1 | For Those About To Rock We Salute You | 1 |\n| 2 | Balls to the Wall | 2 |\n| 3 | Restless and Wild | 2 |\n| 4 | Let There Be Rock | 1 |\n| 5 | Big Ones | 3 |\n\n（由于数据量较大，此处仅展示前5行，完整的100行数据未全部列出。）\n\n查询通过直接选择 `Album` 表中的所有列并限制返回1000条结果来获取所有专辑信息。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示所有客户",
+      "category": "simple_select",
+      "description": "SELECT all customers",
+      "expected_sql": "SELECT * FROM Customer",
+      "generated_sql": "SELECT\n  *\nFROM Customer LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 59,
+      "execution_time": 10.051,
+      "answer": "数据库中总共有 **59 位客户**。\n\n以下是前5位客户的信息预览：\n\n| 客户ID | 名 | 姓 | 公司 | 城市 | 国家 | 支持代表ID |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| 1 | Luís | Gonçalves | Embraer - Empresa Brasileira de Aeronáutica S.A. | São José dos Campos | Brazil | 3 |\n| 2 | Leonie | Köhler | None | Stuttgart | Germany | 5 |\n| 3 | François | Tremblay | None | Montréal | Canada | 3 |\n| 4 | Bjørn | Hansen | None | Oslo | Norway | 4 |\n| 5 | František | Wichterlová | JetBrains s.r.o. | Prague | Czech Republic | 4 |\n\n**数据洞察**：从预览数据可以看出，客户来自多个不同的国家（巴西、德国、加拿大等），且部分客户有公司信息，部分为个人客户（公司字段为“None”）。\n\n以上结果通过执行 `SELECT * FROM Customer` 查询并限制返回前1000行获得，实际共返回59行数据。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示前10首歌曲",
+      "category": "simple_select",
+      "description": "SELECT with LIMIT",
+      "expected_sql": "SELECT * FROM Track LIMIT 10",
+      "generated_sql": "SELECT\n  *\nFROM Track\nLIMIT 10",
+      "execution_success": true,
+      "result_count": 10,
+      "execution_time": 11.842,
+      "answer": "根据您的查询，以下是数据库中的前10首歌曲：\n\n| 歌曲名称 | 作曲家 | 时长（毫秒） | 价格 |\n|---------|--------|-------------|------|\n| For Those About To Rock (We Salute You) | Angus Young, Malcolm Young, Brian Johnson | 343719 | 0.99 |\n| Balls to the Wall | U. Dirkschneider, W. Hoffmann, H. Frank, P. Baltes, S. Kaufmann, G. Hoffmann | 342562 | 0.99 |\n| Fast As a Shark | F. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman | 230619 | 0.99 |\n| Restless and Wild | F. Baltes, R.A. Smith-Diesel, S. Kaufman, U. Dirkscneider & W. Hoffman | 252051 | 0.99 |\n| Princess of the Dawn | Deaffy & R.A. Smith-Diesel | 375418 | 0.99 |\n| ...（还有5首歌曲） | ... | ... | ... |\n\n**数据洞察**：这10首歌曲的价格均为 **0.99**，且前5首中有3首来自同一专辑（AlbumId = 3）。\n\n**SQL溯源**：此结果通过查询 `Track` 表并使用 `LIMIT 10` 限制返回前10行记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示所有音乐风格",
+      "category": "simple_select",
+      "description": "SELECT genres",
+      "expected_sql": "SELECT * FROM Genre",
+      "generated_sql": "SELECT\n  Name\nFROM Genre LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 25,
+      "execution_time": 4.707,
+      "answer": "数据库中总共有 **25 种音乐风格**。\n\n以下是其中主要的5种风格：\n\n| 风格名称 |\n| --- |\n| Rock |\n| Jazz |\n| Metal |\n| Alternative & Punk |\n| Rock And Roll |\n\n（还有20种风格未在此列出）\n\n查询通过直接选择 `Genre` 表中的 `Name` 列，并限制返回最多1000条记录，以获取所有音乐风格的列表。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "列出所有艺术家",
+      "category": "simple_select",
+      "description": "SELECT artists",
+      "expected_sql": "SELECT * FROM Artist",
+      "generated_sql": "SELECT\n  *\nFROM Artist LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 6.921,
+      "answer": "数据库中总共有 **100 位艺术家**。\n\n以下是前5位艺术家的列表：\n\n| 艺术家ID | 艺术家名称 |\n|----------|------------|\n| 1 | AC/DC |\n| 2 | Accept |\n| 3 | Aerosmith |\n| 4 | Alanis Morissette |\n| 5 | Alice In Chains |\n\n... 还有 95 位艺术家未在此列出。\n\n查询通过直接选择 Artist 表的所有列，并限制返回 1000 行（实际返回 100 行）来获取完整的艺术家列表。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "有多少首歌曲？",
+      "category": "aggregate",
+      "description": "COUNT all tracks",
+      "expected_sql": "SELECT COUNT(*) as total FROM Track",
+      "generated_sql": "SELECT\n  COUNT(*)\nFROM Track LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 1,
+      "execution_time": 3.297,
+      "answer": "数据库中总共有 **3503 首歌曲**。\n\n这个结果通过统计 Track 表的总行数得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "统计客户总数",
+      "category": "aggregate",
+      "description": "COUNT customers",
+      "expected_sql": "SELECT COUNT(*) as total FROM Customer",
+      "generated_sql": "SELECT\n  COUNT(*) AS total_customers\nFROM Customer LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 1,
+      "execution_time": 3.102,
+      "answer": "数据库中总共有 **59 位客户**。\n\n这个结果通过统计 Customer 表的总行数得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "有多少张专辑？",
+      "category": "aggregate",
+      "description": "COUNT albums",
+      "expected_sql": "SELECT COUNT(*) as total FROM Album",
+      "generated_sql": "SELECT\n  COUNT(*) AS album_count\nFROM Album LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 1,
+      "execution_time": 3.304,
+      "answer": "数据库中总共有 **347 张专辑**。\n\n这个结果通过统计 Album 表的总行数得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "歌曲的平均价格是多少？",
+      "category": "aggregate",
+      "description": "AVG price",
+      "expected_sql": "SELECT AVG(UnitPrice) as avg_price FROM Track",
+      "generated_sql": "SELECT\n  AVG(UnitPrice) AS average_price\nFROM Track LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 1,
+      "execution_time": 5.083,
+      "answer": "歌曲的平均价格约为 **1.05**。\n\n具体来说，根据对数据库中歌曲价格的计算，平均价格为 **1.0508**（四舍五入后约为 1.05）。\n\n这个结果是通过计算 Track 表中所有歌曲的 UnitPrice 平均值得出的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "统计所有订单的总金额",
+      "category": "aggregate",
+      "description": "SUM invoice totals",
+      "expected_sql": "SELECT SUM(Total) as total_amount FROM Invoice",
+      "generated_sql": "SELECT\n  SUM(Total) AS total_amount\nFROM Invoice LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 1,
+      "execution_time": 3.89,
+      "answer": "所有订单的总金额为 **2328.60**。\n\n| 总金额 |\n| --- |\n| 2328.60 |\n\n这个结果是通过对 Invoice 表中的 Total 字段进行求和计算得出的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示来自巴西的客户",
+      "category": "filter",
+      "description": "WHERE with string equality",
+      "expected_sql": "SELECT * FROM Customer WHERE Country = 'Brazil'",
+      "generated_sql": "SELECT\n  *\nFROM Customer\nWHERE\n  Country = 'Brazil' LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 5,
+      "execution_time": 12.847,
+      "answer": "数据库中总共有 **5 位来自巴西的客户**。\n\n以下是他们的详细信息：\n\n| 客户ID | 名字 | 姓氏 | 公司 | 城市 | 州 | 电话 | 支持代表ID |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| 1 | Luís | Gonçalves | Embraer - Empresa Brasileira de Aeronáutica S.A. | São José dos Campos | SP | +55 (12) 3923-5555 | 3 |\n| 10 | Eduardo | Martins | Woodstock Discos | São Paulo | SP | +55 (11) 3033-5446 | 4 |\n| 11 | Alexandre | Rocha | Banco do Brasil S.A. | São Paulo | SP | +55 (11) 3055-3278 | 5 |\n| 12 | Roberto | Almeida | Riotur | Rio de Janeiro | RJ | +55 (21) 2271-7000 | 3 |\n| 13 | Fernanda | Ramos | None | Brasília | DF | +55 (61) 3363-5547 | 4 |\n\n**数据洞察**：这5位客户分布在巴西的4个不同城市（São José dos Campos, São Paulo, Rio de Janeiro, Brasília），并且由3位不同的客服代表（ID: 3, 4, 5）提供服务。\n\n这个结果通过查询 `Customer` 表，筛选出 `Country` 字段为 `'Brazil'` 的所有记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示价格大于1美元的歌曲",
+      "category": "filter",
+      "description": "WHERE with numeric comparison",
+      "expected_sql": "SELECT * FROM Track WHERE UnitPrice > 1",
+      "generated_sql": "SELECT\n  Name,\n  UnitPrice\nFROM Track\nWHERE\n  UnitPrice > 1.00 LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 7.777,
+      "answer": "根据查询结果，**共有 100 首歌曲的价格大于 1 美元**。以下是其中价格最高的前5首歌曲：\n\n| 歌曲名称 | 价格 |\n|---------|------|\n| Battlestar Galactica: The Story So Far | $1.99 |\n| Occupation / Precipice | $1.99 |\n| Exodus, Pt. 1 | $1.99 |\n| Exodus, Pt. 2 | $1.99 |\n| Collaborators | $1.99 |\n\n所有查询到的歌曲价格均为 **$1.99**，没有其他价格档位。由于结果较多（共100行），这里仅展示前5条作为示例。\n\n这个结果通过筛选 Track 表中 UnitPrice 大于 1.00 的记录并限制返回前1000条得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示Rock风格的歌曲",
+      "category": "filter",
+      "description": "WHERE with join",
+      "expected_sql": "SELECT t.* FROM Track t JOIN Genre g ON t.GenreId = g.GenreId WHERE g.Name = 'Rock'",
+      "generated_sql": "SELECT\n  t.Name,\n  t.Composer,\n  t.Milliseconds,\n  t.UnitPrice\nFROM Track AS t\nJOIN Genre AS g\n  ON t.GenreId = g.GenreId\nWHERE\n  g.Name = 'Rock' LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 13.013,
+      "answer": "数据库中总共有 **100 首 Rock 风格的歌曲**。以下是其中的前5首：\n\n| 歌曲名称 | 作曲者 | 时长（毫秒） | 单价（美元） |\n| :--- | :--- | :--- | :--- |\n| For Those About To Rock (We Salute You) | Angus Young, Malcolm Young, Brian Johnson | 343719 | 0.99 |\n| Balls to the Wall | U. Dirkschneider, W. Hoffmann, H. Frank, P. Baltes, S. Kaufmann, G. Hoffmann | 342562 | 0.99 |\n| Fast As a Shark | F. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman | 230619 | 0.99 |\n| Restless and Wild | F. Baltes, R.A. Smith-Diesel, S. Kaufman, U. Dirkscneider & W. Hoffman | 252051 | 0.99 |\n| Princess of the Dawn | Deaffy & R.A. Smith-Diesel | 375418 | 0.99 |\n\n**数据洞察**：这5首歌曲的单价均为 **0.99美元**，这是该数据库中歌曲的常见价格。\n\n这个结果是通过连接 `Track` 表和 `Genre` 表，并筛选出流派名称为 “Rock” 的歌曲得出的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示价格在0.99到1.99之间的歌曲",
+      "category": "filter",
+      "description": "WHERE with BETWEEN",
+      "expected_sql": "SELECT * FROM Track WHERE UnitPrice BETWEEN 0.99 AND 1.99",
+      "generated_sql": "SELECT\n  Name,\n  UnitPrice\nFROM Track\nWHERE\n  UnitPrice BETWEEN 0.99 AND 1.99 LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 8.875,
+      "answer": "根据查询结果，共有 **100 首歌曲**的价格在 0.99 到 1.99 之间。\n\n以下是其中前 5 首歌曲的示例：\n\n| 歌曲名称 | 价格 |\n| --- | --- |\n| For Those About To Rock (We Salute You) | 0.99 |\n| Balls to the Wall | 0.99 |\n| Fast As a Shark | 0.99 |\n| Restless and Wild | 0.99 |\n| Princess of the Dawn | 0.99 |\n\n**数据洞察**：预览数据显示，这5首歌曲的价格均为 **0.99**，表明在此价格区间内，0.99是歌曲的一个常见定价。\n\n**SQL溯源**：此结果通过查询 `Track` 表，筛选 `UnitPrice` 字段在 0.99 到 1.99 之间的记录，并限制返回前 1000 条数据得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示2010年的所有订单",
+      "category": "filter",
+      "description": "WHERE with date filter",
+      "expected_sql": "SELECT * FROM Invoice WHERE InvoiceDate LIKE '2010%'",
+      "generated_sql": "SELECT\n  *\nFROM Invoice\nWHERE\n  STRFTIME('%Y', InvoiceDate) = '2010' LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 0,
+      "execution_time": 4.426,
+      "answer": "**没有找到**2010年的任何订单记录。\n\n查询结果显示，数据库中不存在2010年的订单数据。\n\n这个结果通过筛选 Invoice 表中 InvoiceDate 字段年份为2010的记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "按价格降序排列所有歌曲",
+      "category": "sort",
+      "description": "ORDER BY DESC",
+      "expected_sql": "SELECT * FROM Track ORDER BY UnitPrice DESC",
+      "generated_sql": "SELECT\n  Name,\n  UnitPrice\nFROM Track\nORDER BY\n  UnitPrice DESC LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 8.729,
+      "answer": "根据查询结果，所有歌曲已按价格从高到低排列。价格最高的歌曲为 **1.99**，共有 **100 首**歌曲处于这个最高价位。\n\n以下是价格最高的前5首歌曲：\n\n| 歌曲名称 | 价格 |\n|---------|------|\n| Battlestar Galactica: The Story So Far | 1.99 |\n| Occupation / Precipice | 1.99 |\n| Exodus, Pt. 1 | 1.99 |\n| Exodus, Pt. 2 | 1.99 |\n| Collaborators | 1.99 |\n\n**数据洞察**：结果显示，所有返回的歌曲价格均为 1.99，这表明数据库中价格最高的歌曲有多首，且价格相同。\n\n查询通过从 Track 表中选择歌曲名称和价格，并按价格降序排列，返回了前 1000 条记录（实际返回 100 行）。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "按名字排序显示所有艺术家",
+      "category": "sort",
+      "description": "ORDER BY ASC",
+      "expected_sql": "SELECT * FROM Artist ORDER BY Name",
+      "generated_sql": "SELECT\n  *\nFROM Artist\nORDER BY\n  Name LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 7.244,
+      "answer": "已按名字排序显示了所有艺术家。\n\n查询共返回 **100 位艺术家**，以下是按名字升序排列的前5位：\n\n| 艺术家ID | 艺术家名称 |\n| --- | --- |\n| 43 | A Cor Do Som |\n| 1 | AC/DC |\n| 230 | Aaron Copland & London Symphony Orchestra |\n| 202 | Aaron Goldberg |\n| 214 | Academy of St. Martin in the Fields & Sir Neville Marriner |\n\n... 还有 95 位艺术家未列出。\n\n从预览数据可以看出，排序严格遵循了字母顺序（包含空格和特殊字符）。\n\n此结果通过执行 `SELECT * FROM Artist ORDER BY Name` 查询并限制返回前1000条记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "价格最高的10首歌曲",
+      "category": "sort",
+      "description": "Top N with ORDER BY",
+      "expected_sql": "SELECT * FROM Track ORDER BY UnitPrice DESC LIMIT 10",
+      "generated_sql": "SELECT\n  Name,\n  UnitPrice\nFROM Track\nORDER BY\n  UnitPrice DESC\nLIMIT 10",
+      "execution_success": true,
+      "result_count": 10,
+      "execution_time": 9.422,
+      "answer": "根据查询结果，价格最高的10首歌曲均为1.99美元。\n\n以下是这10首歌曲的完整列表：\n\n| 歌曲名称 | 价格 (美元) |\n| :--- | :--- |\n| Battlestar Galactica: The Story So Far | 1.99 |\n| Occupation / Precipice | 1.99 |\n| Exodus, Pt. 1 | 1.99 |\n| Exodus, Pt. 2 | 1.99 |\n| Collaborators | 1.99 |\n| Torn | 1.99 |\n| A Measure of Salvation | 1.99 |\n| Hero | 1.99 |\n| Passage, Pt. 1 | 1.99 |\n| Passage, Pt. 2 | 1.99 |\n\n**数据洞察**：所有列出的歌曲价格完全相同，均为当前数据库中的最高单价。\n\n**SQL溯源**：此结果通过查询 `Track` 表，按 `UnitPrice` 降序排序，并取前10条记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "时长最长的5首歌曲",
+      "category": "sort",
+      "description": "Top N by duration",
+      "expected_sql": "SELECT Name, Milliseconds FROM Track ORDER BY Milliseconds DESC LIMIT 5",
+      "generated_sql": "SELECT\n  Name,\n  Milliseconds\nFROM Track\nORDER BY\n  Milliseconds DESC\nLIMIT 5",
+      "execution_success": true,
+      "result_count": 5,
+      "execution_time": 7.5,
+      "answer": "以下是数据库中时长最长的5首歌曲：\n\n| 歌曲名称 | 时长（毫秒） |\n| --- | --- |\n| Occupation / Precipice | 5,286,953 |\n| Through a Looking Glass | 5,088,838 |\n| Greetings from Earth, Pt. 1 | 2,960,293 |\n| The Man With Nine Lives | 2,956,998 |\n| Battlestar Galactica, Pt. 2 | 2,956,081 |\n\n这5首歌曲的时长均超过290万毫秒，其中前两首更是超过了500万毫秒，显著长于其他歌曲。\n\n查询通过按歌曲时长（Milliseconds）降序排序，并限制返回前5条结果得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "最新的10个订单",
+      "category": "sort",
+      "description": "Latest records",
+      "expected_sql": "SELECT * FROM Invoice ORDER BY InvoiceDate DESC LIMIT 10",
+      "generated_sql": "SELECT\n  *\nFROM Invoice\nORDER BY\n  InvoiceDate DESC\nLIMIT 10",
+      "execution_success": true,
+      "result_count": 10,
+      "execution_time": 19.591,
+      "answer": "根据查询结果，最新的10个订单如下：\n\n| 订单ID | 客户ID | 下单日期 | 账单地址 | 账单城市 | 账单州/省 | 账单国家 | 邮编 | 总金额 |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| 412 | 58 | 2025-12-22 | 12,Community Centre | Delhi | None | India | 110017 | 1.99 |\n| 411 | 44 | 2025-12-14 | Porthaninkatu 9 | Helsinki | None | Finland | 00530 | 13.86 |\n| 410 | 35 | 2025-12-09 | Rua dos Campeões Europeus de Viena, 4350 | Porto | None | Portugal | None | 8.91 |\n| 409 | 29 | 2025-12-06 | 796 Dundas Street West | Toronto | ON | Canada | M6J 1V1 | 5.94 |\n| 408 | 25 | 2025-12-05 | 319 N. Frances Street | Madison | WI | USA | 53703 | 3.96 |\n| 407 | 56 | 2025-11-29 | 307 Macacha Güemes | Buenos Aires | None | Argentina | 1106 | 5.94 |\n| 406 | 57 | 2025-11-22 | Calle Lira, 198 | Santiago | None | Chile | None | 8.91 |\n| 405 | 57 | 2025-11-15 | Calle Lira, 198 | Santiago | None | Chile | None | 13.86 |\n| 404 | 19 | 2025-11-08 | 1 Infinite Loop | Cupertino | CA | USA | 95014 | 0.99 |\n| 403 | 19 | 2025-11-01 | 1 Infinite Loop | Cupertino | CA | USA | 95014 | 1.98 |\n\n**数据洞察**：这10个订单的下单日期集中在2025年11月至12月，总金额在0.99至13.86之间，客户来自印度、芬兰、葡萄牙、加拿大、美国、阿根廷和智利等多个国家。\n\n**SQL溯源**：此结果通过查询 `Invoice` 表，按 `InvoiceDate` 降序排列，并限制返回10条记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示所有专辑及其艺术家名称",
+      "category": "join",
+      "description": "Simple JOIN",
+      "expected_sql": "SELECT al.Title, ar.Name FROM Album al JOIN Artist ar ON al.ArtistId = ar.ArtistId",
+      "generated_sql": "SELECT\n  Album.Title,\n  Artist.Name\nFROM Album\nJOIN Artist\n  ON Album.ArtistId = Artist.ArtistId LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 8.787,
+      "answer": "根据查询结果，数据库中显示了所有专辑及其对应的艺术家名称。\n\n本次查询共返回 **100 条记录**，以下是前5张专辑及其艺术家的信息：\n\n| 专辑名称 | 艺术家 |\n| :--- | :--- |\n| For Those About To Rock We Salute You | AC/DC |\n| Balls to the Wall | Accept |\n| Restless and Wild | Accept |\n| Let There Be Rock | AC/DC |\n| Big Ones | Aerosmith |\n\n... 还有 95 行数据未显示。\n\n**数据洞察**：从预览数据可以看出，一位艺术家可能拥有多张专辑（例如 AC/DC 和 Accept）。\n\n这个结果是通过连接 `Album` 表和 `Artist` 表，根据 `ArtistId` 匹配关联数据后获得的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "AC/DC的所有专辑",
+      "category": "join",
+      "description": "JOIN with WHERE",
+      "expected_sql": "SELECT al.Title FROM Album al JOIN Artist ar ON al.ArtistId = ar.ArtistId WHERE ar.Name = 'AC/DC'",
+      "generated_sql": "SELECT\n  AlbumId,\n  Title,\n  ArtistId\nFROM Album\nWHERE\n  ArtistId = (\n    SELECT\n      ArtistId\n    FROM Artist\n    WHERE\n      Name = 'AC/DC'\n  ) LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 2,
+      "execution_time": 5.88,
+      "answer": "AC/DC 共有 **2 张专辑**，具体如下：\n\n| 专辑名称 | 专辑ID |\n|----------|--------|\n| For Those About To Rock We Salute You | 1 |\n| Let There Be Rock | 4 |\n\n查询通过子查询先获取 AC/DC 的 ArtistId，再筛选 Album 表中对应 ArtistId 的所有专辑记录。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示所有歌曲及其专辑和艺术家",
+      "category": "join",
+      "description": "Multiple JOINs",
+      "expected_sql": "SELECT t.Name as Track, al.Title as Album, ar.Name as Artist FROM Track t JOIN Album al ON t.AlbumId = al.AlbumId JOIN Artist ar ON al.ArtistId = ar.ArtistId",
+      "generated_sql": "SELECT\n  t.Name AS TrackName,\n  a.Title AS AlbumTitle,\n  ar.Name AS ArtistName\nFROM Track AS t\nJOIN Album AS a\n  ON t.AlbumId = a.AlbumId\nJOIN Artist AS ar\n  ON a.ArtistId = ar.ArtistId LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 10.149,
+      "answer": "根据查询结果，数据库中显示了歌曲及其对应的专辑和艺术家信息。\n\n查询共返回 **100 首歌曲**，以下是前5首歌曲的详细信息：\n\n| 歌曲名称 | 专辑名称 | 艺术家 |\n| :--- | :--- | :--- |\n| For Those About To Rock (We Salute You) | For Those About To Rock We Salute You | AC/DC |\n| Balls to the Wall | Balls to the Wall | Accept |\n| Fast As a Shark | Restless and Wild | Accept |\n| Restless and Wild | Restless and Wild | Accept |\n| Princess of the Dawn | Restless and Wild | Accept |\n\n（由于结果较多，此处仅展示前5行作为示例。）\n\n这个结果是通过连接 `Track`、`Album` 和 `Artist` 三个表，将歌曲、专辑和艺术家信息关联起来查询得到的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": false,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "显示每个客户的订单总数",
+      "category": "join",
+      "description": "JOIN with GROUP BY",
+      "expected_sql": "SELECT c.FirstName, c.LastName, COUNT(i.InvoiceId) as order_count FROM Customer c LEFT JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId, c.FirstName, c.LastName",
+      "generated_sql": "SELECT\n  CustomerId,\n  COUNT(*) AS order_count\nFROM Invoice\nGROUP BY\n  CustomerId LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 59,
+      "execution_time": 6.361,
+      "answer": "数据库中总共有 **59 位客户**，每位客户的订单数量如下：\n\n| 客户 ID | 订单总数 |\n|---------|----------|\n| 1 | 7 |\n| 2 | 7 |\n| 3 | 7 |\n| 4 | 7 |\n| 5 | 7 |\n\n（还有 54 位客户的数据未显示）\n\n从数据预览来看，前5位客户每人都有7个订单，订单数量分布较为均匀。\n\n这个结果通过统计 Invoice 表，按 CustomerId 分组计算每个客户的订单总数得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "每个国家有多少客户？",
+      "category": "group_by",
+      "description": "GROUP BY with COUNT",
+      "expected_sql": "SELECT Country, COUNT(*) as customer_count FROM Customer GROUP BY Country",
+      "generated_sql": "SELECT\n  Country,\n  COUNT(*) AS customer_count\nFROM Customer\nGROUP BY\n  Country LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 24,
+      "execution_time": 7.209,
+      "answer": "数据库中客户分布在 **24 个不同的国家**。以下是客户数量最多的前5个国家：\n\n| 国家 | 客户数量 |\n|------|----------|\n| Brazil | 5 |\n| Argentina | 1 |\n| Australia | 1 |\n| Austria | 1 |\n| Belgium | 1 |\n\n（还有19个国家的数据未在此列出，每个国家至少有1位客户。）\n\n从预览数据来看，巴西的客户数量最多（5位），而大多数国家目前只有1位客户。\n\n这个结果是通过按国家分组（`GROUP BY Country`）并统计每组的客户数量得出的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "每个音乐风格有多少首歌？",
+      "category": "group_by",
+      "description": "GROUP BY with JOIN",
+      "expected_sql": "SELECT g.Name, COUNT(t.TrackId) as track_count FROM Genre g LEFT JOIN Track t ON g.GenreId = t.GenreId GROUP BY g.GenreId, g.Name",
+      "generated_sql": "SELECT\n  g.Name AS Genre,\n  COUNT(t.TrackId) AS track_count\nFROM Genre AS g\nLEFT JOIN Track AS t\n  ON g.GenreId = t.GenreId\nGROUP BY\n  g.GenreId,\n  g.Name\nORDER BY\n  track_count DESC LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 25,
+      "execution_time": 8.126,
+      "answer": "数据库中总共有 **25 种音乐风格**，每种风格包含的歌曲数量如下：\n\n| 音乐风格 | 歌曲数量 |\n| --- | --- |\n| Rock | 1297 |\n| Latin | 579 |\n| Metal | 374 |\n| Alternative & Punk | 332 |\n| Jazz | 130 |\n\n（还有 20 种风格未列出，完整列表共 25 种风格）\n\n**数据洞察**：Rock（摇滚）风格的歌曲数量远超其他风格，占总数的很大一部分。\n\n这个结果通过连接 Genre 和 Track 表，按音乐风格分组统计歌曲数量，并按数量降序排列得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "统计每个艺术家的专辑数",
+      "category": "group_by",
+      "description": "Artist album counts",
+      "expected_sql": "SELECT ar.Name, COUNT(al.AlbumId) as album_count FROM Artist ar LEFT JOIN Album al ON ar.ArtistId = al.ArtistId GROUP BY ar.ArtistId, ar.Name",
+      "generated_sql": "SELECT\n  Artist.Name,\n  COUNT(Album.AlbumId) AS album_count\nFROM Artist\nLEFT JOIN Album\n  ON Artist.ArtistId = Album.ArtistId\nGROUP BY\n  Artist.ArtistId,\n  Artist.Name\nORDER BY\n  album_count DESC LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 100,
+      "execution_time": 8.592,
+      "answer": "根据统计，数据库中 **共有 100 位艺术家**，每位艺术家的专辑数量如下（按专辑数从高到低排列）：\n\n| 艺术家 | 专辑数量 |\n| --- | --- |\n| Iron Maiden | 21 |\n| Led Zeppelin | 14 |\n| Deep Purple | 11 |\n| Metallica | 10 |\n| U2 | 10 |\n\n（注：以上仅展示专辑数量最多的前5位艺术家，完整列表包含100位艺术家。）\n\n从数据可以看出，**Iron Maiden** 的专辑数量最多（21张），而大部分艺术家的专辑数量在10张以下。\n\n此结果通过连接 Artist 和 Album 表，按艺术家分组统计专辑数量，并按专辑数降序排列得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "每个城市的客户数量",
+      "category": "group_by",
+      "description": "GROUP BY city",
+      "expected_sql": "SELECT City, COUNT(*) as customer_count FROM Customer GROUP BY City",
+      "generated_sql": "SELECT\n  City,\n  COUNT(*) AS customer_count\nFROM Customer\nGROUP BY\n  City LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 53,
+      "execution_time": 6.491,
+      "answer": "根据查询结果，数据库中客户分布在 **53 个不同的城市**。\n\n以下是客户数量最多的前5个城市：\n\n| 城市 | 客户数量 |\n|------|----------|\n| Berlin | 2 |\n| Amsterdam | 1 |\n| Bangalore | 1 |\n| Bordeaux | 1 |\n| Boston | 1 |\n\n在全部53个城市中，绝大多数城市（如预览所示）只有1位客户，仅柏林有2位客户，客户分布较为分散。\n\n这个结果通过 SQL 查询统计 Customer 表中每个城市的客户数量得出，使用了 `GROUP BY City` 进行分组计数。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": true,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "每年的订单总金额",
+      "category": "group_by",
+      "description": "GROUP BY year with SUM",
+      "expected_sql": "SELECT strftime('%Y', InvoiceDate) as year, SUM(Total) as total_amount FROM Invoice GROUP BY year",
+      "generated_sql": "SELECT\n  STRFTIME('%Y', InvoiceDate) AS year,\n  SUM(Total) AS total_amount\nFROM Invoice\nGROUP BY\n  STRFTIME('%Y', InvoiceDate)\nORDER BY\n  year LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 5,
+      "execution_time": 8.353,
+      "answer": "根据查询结果，数据库中每年的订单总金额如下：\n\n| 年份 | 订单总金额 |\n|------|------------|\n| 2021 | 449.46 |\n| 2022 | 481.45 |\n| 2023 | 469.58 |\n| 2024 | 477.53 |\n| 2025 | 450.58 |\n\n从数据来看，订单总金额在2022年达到最高（481.45），随后在2023年略有下降，2024年又有所回升，整体金额在449至482之间波动。\n\n这个结果通过按年份分组（使用 `STRFTIME('%Y', InvoiceDate)` 提取年份）并汇总 `Total` 字段得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "消费金额最高的10个客户",
+      "category": "complex",
+      "description": "Top customers by spending",
+      "expected_sql": "SELECT c.FirstName, c.LastName, SUM(i.Total) as total_spent FROM Customer c JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.CustomerId, c.FirstName, c.LastName ORDER BY total_spent DESC LIMIT 10",
+      "generated_sql": "SELECT\n  c.CustomerId,\n  c.FirstName,\n  c.LastName,\n  SUM(i.Total) AS total_spent\nFROM Customer AS c\nJOIN Invoice AS i\n  ON c.CustomerId = i.CustomerId\nGROUP BY\n  c.CustomerId,\n  c.FirstName,\n  c.LastName\nORDER BY\n  total_spent DESC\nLIMIT 10",
+      "execution_success": true,
+      "result_count": 10,
+      "execution_time": 12.833,
+      "answer": "根据查询结果，消费金额最高的10位客户如下：\n\n| 客户ID | 名字 | 姓氏 | 总消费金额 |\n|--------|------|------|------------|\n| 6 | Helena | Holý | 49.62 |\n| 26 | Richard | Cunningham | 47.62 |\n| 57 | Luis | Rojas | 46.62 |\n| 45 | Ladislav | Kovács | 45.62 |\n| 46 | Hugh | O'Reilly | 45.62 |\n| 7 | Astrid | Gruber | 43.62 |\n| 24 | Frank | Ralston | 43.62 |\n| 25 | Victor | Stevens | 43.62 |\n| 1 | Luís | Gonçalves | 39.62 |\n| 13 | Fernanda | Ramos | 39.62 |\n\n**数据洞察**：消费金额最高的客户（Helena Holý）与第十名客户（Fernanda Ramos）之间的差距约为10元，前10名客户的消费金额集中在39.62至49.62的区间内。\n\n**SQL溯源**：此结果通过连接 Customer 和 Invoice 表，按客户分组并汇总其所有发票的总金额，最后按总金额降序排列并取前10条记录得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "每个国家客户的平均消费",
+      "category": "complex",
+      "description": "Average spending by country",
+      "expected_sql": "SELECT c.Country, AVG(i.Total) as avg_spending FROM Customer c JOIN Invoice i ON c.CustomerId = i.CustomerId GROUP BY c.Country",
+      "generated_sql": "SELECT\n  c.Country,\n  AVG(i.Total) AS average_spent\nFROM Customer AS c\nJOIN Invoice AS i\n  ON c.CustomerId = i.CustomerId\nGROUP BY\n  c.Country LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 24,
+      "execution_time": 8.918,
+      "answer": "根据查询结果，**每个国家客户的平均消费情况如下**：  \n\n数据库中共有 **24 个国家** 的客户消费数据，以下是平均消费金额最高的前5个国家：\n\n| 国家 | 平均消费金额 |\n|------|--------------|\n| Austria | 6.09 |\n| Brazil | 5.43 |\n| Argentina | 5.37 |\n| Australia | 5.37 |\n| Belgium | 5.37 |\n\n**数据洞察**：  \n- 奥地利（Austria）的平均消费最高（约 6.09），明显高于其他国家。  \n- 多个国家的平均消费金额非常接近（如阿根廷、澳大利亚、比利时均为 5.37 左右）。  \n\n**SQL 溯源**：  \n该结果通过连接 `Customer` 和 `Invoice` 表，按国家分组并计算平均消费金额得出。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "歌曲数量最多的前5个音乐风格",
+      "category": "complex",
+      "description": "Top genres by track count",
+      "expected_sql": "SELECT g.Name, COUNT(t.TrackId) as track_count FROM Genre g JOIN Track t ON g.GenreId = t.GenreId GROUP BY g.GenreId, g.Name ORDER BY track_count DESC LIMIT 5",
+      "generated_sql": "SELECT\n  g.Name,\n  COUNT(t.TrackId) AS track_count\nFROM Genre AS g\nJOIN Track AS t\n  ON g.GenreId = t.GenreId\nGROUP BY\n  g.GenreId,\n  g.Name\nORDER BY\n  track_count DESC\nLIMIT 5",
+      "execution_success": true,
+      "result_count": 5,
+      "execution_time": 8.8,
+      "answer": "歌曲数量最多的前5个音乐风格分别是：**Rock（摇滚）、Latin（拉丁）、Metal（金属）、Alternative & Punk（另类与朋克）和 Jazz（爵士）**。\n\n具体数据如下：\n\n| 音乐风格 | 歌曲数量 |\n|----------|----------|\n| Rock | 1,297 |\n| Latin | 579 |\n| Metal | 374 |\n| Alternative & Punk | 332 |\n| Jazz | 130 |\n\n**数据洞察**：摇滚风格（Rock）的歌曲数量遥遥领先，几乎是第二名拉丁风格的两倍多，占据了绝对主导地位。\n\n这个结果是通过连接 Genre 和 Track 表，按音乐风格分组统计歌曲数量，并按数量降序排列取前5条得出的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "销量最好的前10首歌",
+      "category": "complex",
+      "description": "Best selling tracks",
+      "expected_sql": "SELECT t.Name, COUNT(il.InvoiceLineId) as sales_count FROM Track t JOIN InvoiceLine il ON t.TrackId = il.TrackId GROUP BY t.TrackId, t.Name ORDER BY sales_count DESC LIMIT 10",
+      "generated_sql": "SELECT\n  t.Name,\n  SUM(il.Quantity) AS total_sales\nFROM Track AS t\nJOIN InvoiceLine AS il\n  ON t.TrackId = il.TrackId\nGROUP BY\n  t.TrackId,\n  t.Name\nORDER BY\n  total_sales DESC\nLIMIT 10",
+      "execution_success": true,
+      "result_count": 10,
+      "execution_time": 8.055,
+      "answer": "根据销量统计，以下是销量最好的前10首歌曲：\n\n| 歌曲名称 | 总销量 |\n|---------|--------|\n| Balls to the Wall | 2 |\n| Inject The Venom | 2 |\n| Snowballed | 2 |\n| Overdose | 2 |\n| Deuces Are Wild | 2 |\n| *（还有5首歌曲，销量均为2）* | |\n\n这10首歌曲的销量均为2，并列第一。查询通过连接Track和InvoiceLine表，按歌曲分组统计总销量，并按销量降序排列取前10条结果。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    },
+    {
+      "question": "专辑数量超过10的艺术家",
+      "category": "complex",
+      "description": "Artists with HAVING clause",
+      "expected_sql": "SELECT ar.Name, COUNT(al.AlbumId) as album_count FROM Artist ar JOIN Album al ON ar.ArtistId = al.ArtistId GROUP BY ar.ArtistId, ar.Name HAVING COUNT(al.AlbumId) > 10",
+      "generated_sql": "SELECT\n  Artist.Name,\n  COUNT(Album.AlbumId) AS album_count\nFROM Artist\nJOIN Album\n  ON Artist.ArtistId = Album.ArtistId\nGROUP BY\n  Artist.ArtistId,\n  Artist.Name\nHAVING\n  COUNT(Album.AlbumId) > 10 LIMIT 1000;",
+      "execution_success": true,
+      "result_count": 3,
+      "execution_time": 7.088,
+      "answer": "根据查询结果，共有 **3 位艺术家**的专辑数量超过了10张。\n\n以下是这三位艺术家及其专辑数量：\n\n| 艺术家 | 专辑数量 |\n| --- | --- |\n| Iron Maiden | 21 |\n| Led Zeppelin | 14 |\n| Deep Purple | 11 |\n\n其中，**Iron Maiden** 的专辑数量最多，达到了21张。\n\n这个结果是通过连接 Artist 和 Album 表，按艺术家分组统计专辑数量，并筛选出专辑数大于10的艺术家得出的。",
+      "error": null,
+      "metrics": {
+        "sql_exact_match": false,
+        "sql_semantic_match": true,
+        "execution_accuracy": true
+      }
+    }
+  ],
+  "timestamp": "2025-12-18T12:55:47.055148"
+}
